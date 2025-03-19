@@ -1,32 +1,44 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class Package {
-  final String name;
-  final String latestVersion; 
-  final String? description;
+void main() => runApp(const MyApp());
+// void main()=>runApp(const PaddedText());
 
-  Package(this.name, this.latestVersion, {this.description});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  String toString() {
-    return 'Package{name: $name, latestVersion: $latestVersion, description: $description}';
+  Widget build(BuildContext context) {
+    return MaterialApp( // Root widget
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('My Home Page'),
+          centerTitle: true,
+          shadowColor: Color.fromARGB(50, 22, 112, 255),
+        ),
+        body: Center(
+          child: Builder(
+            builder: (context) {
+              return Column(
+                children: [
+                  const Text('Hello, World!'),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      print('Click!');
+                    },
+                    child: const Text('A button'),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
 
-void main() async {
-  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
-  final httpPackageResponse = await http.get(httpPackageUrl);
-  if (httpPackageResponse.statusCode != 200) {
-    print('Failed to retrieve the http package!');
-    return;
-  }
-  final json = jsonDecode(httpPackageResponse.body);
-  final package = Package(
-    json['name'],
-    json['latestVersion'],
-    description: json['description'],
-  );
-  print(package);
-  print("futter test---1\r\n");
-}
+
+
+
